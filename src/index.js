@@ -2,12 +2,17 @@ const theatreId = 804;
 
 document.addEventListener("DOMContentLoaded", function() {
     const showings = document.querySelector(".showings")
+    const menu = document.querySelector(".ui.inverted.red.menu")
 
     fetch(`https://evening-plateau-54365.herokuapp.com/theatres/${theatreId}`)
     .then(function(response) {
         return response.json()
     })
     .then(function(movies) {
+        //add theater name to header
+        menu.insertAdjacentHTML("beforeend",
+        `<div class="item"><h2>Welcome to ${movies.name}</h2></div>`)
+
         movies.showings.forEach(function(movie) {
             //calculate remaining tickets
             const ticketsRemaining = movie.capacity - movie.tickets_sold
@@ -27,6 +32,7 @@ document.addEventListener("DOMContentLoaded", function() {
             showings.insertAdjacentHTML("beforeend",
             `<div class="card">
                 <div class="content">
+                <div data-action="delete" class="right floated ui mini red basic button">X</div>
                 <div class="header">
                     ${movie.film.title}
                 </div>
@@ -84,6 +90,9 @@ document.addEventListener("DOMContentLoaded", function() {
                     e.target.classList.add("disabled")
                 }
             })
+        }
+        else if (e.target.dataset.action === "delete") {
+            alert("sry you can't do that")
         }
     })
 })
