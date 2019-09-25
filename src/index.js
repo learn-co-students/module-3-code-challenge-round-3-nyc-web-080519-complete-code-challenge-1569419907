@@ -24,6 +24,16 @@ window.addEventListener('DOMContentLoaded', (event) => {
 
     function listTheatres(theatre) {
         theatre.showings.forEach(function(showing) {
+            let buttonStatus = ""
+            let buttonText = ""
+            if (showing.capacity - showing.tickets_sold < 1) {
+                buttonStatus = "disabled"
+                buttonText = "Sold Out"
+            }
+            else {
+                buttonStatus = "blue"
+                buttonText = "Buy Ticket"
+            }
             showingsList.insertAdjacentHTML("beforeend", 
             `<div class="card">
             <div class="content">
@@ -41,22 +51,21 @@ window.addEventListener('DOMContentLoaded', (event) => {
                 </span>
             </div>
             <div class="extra content">
-                <div class="ui blue button" data-showing_id="${showing.id}">Buy Ticket</div>
+                <div class="ui ${buttonStatus} button" data-showing_id="${showing.id}">${buttonText}</div>
             </div>
             </div>`)
         })
     }
 
     function adjustRemainingTickets(ticket) {
-        console.log(ticket)
-        if (!ticket.error) {
-            const myCard = showingsList.querySelector(`[data-showing_id="${ticket.showing_id}"]`).closest(".card")
-            const currentDesc = myCard.querySelector(".description").innerHTML
-            let currentNum = parseInt(currentDesc.split(":")[1])
-            myCard.querySelector(".description").innerHTML = `Remaining Tickets: ${currentNum - 1}`
-        }
-        else {
-            alert("sold out!")
+        const myCard = showingsList.querySelector(`[data-showing_id="${ticket.showing_id}"]`).closest(".card")
+        const myButton = myCard.querySelector(".ui.blue.button")
+        const currentDesc = myCard.querySelector(".description").innerHTML
+        let currentNum = parseInt(currentDesc.split(":")[1])
+        myCard.querySelector(".description").innerHTML = `Remaining Tickets: ${currentNum - 1}`
+        if (currentNum <= 1) {
+            myButton.innerText = "Sold Out"
+            myButton.className = "ui disabled button"
         }
     }
 });
