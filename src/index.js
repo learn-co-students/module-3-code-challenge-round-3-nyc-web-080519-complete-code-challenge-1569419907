@@ -12,8 +12,10 @@ document.addEventListener("DOMContentLoaded", function() {
             //calculate remaining tickets
             const ticketsRemaining = movie.capacity - movie.tickets_sold
 
+            //checking for no tickets remaining here to account for movies that get pulled in with no tickets left
+            //and also to fix all of the tests I did where the rest of the functionality was not working yet
             let button
-            //if there are tickets left, can have regular add button
+            //if there are tickets left, can have regular buy ticket button
             if (ticketsRemaining > 0) {
                 button = `<div data-action="buy" data-id="${movie.id}" class="ui blue button">Buy Ticket</div>`
             }
@@ -65,14 +67,17 @@ document.addEventListener("DOMContentLoaded", function() {
             .then(function(movie) {
                 // console.log(movie)
                 //decrement tickets remaining on front end
+                //find the card that holds the button clicked
                 const card = e.target.closest('.card')
+                //grab the "X remaining tickets" text from within that card
                 const ticketDesc = card.querySelector('.content .description')
+                //grab the number of tickets
                 const tickets = parseInt(ticketDesc.innerText)
                 //if there is more than 1 ticket left, decrement text
                 if (tickets > 1) {
                     ticketDesc.innerText = tickets - 1 + " remaining tickets"
                 }
-                //if there is only one ticket left, decrement text and disable button
+                //if there is only one ticket left, decrement text, disable button, and change button text
                 else if (tickets === 1) {
                     ticketDesc.innerText = tickets - 1 + " remaining tickets"
                     e.target.innerText = "Sold Out"
