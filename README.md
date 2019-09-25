@@ -40,8 +40,7 @@ Example response:
       "id": 30,
       "film": {
         "title": "The Torment of Others 2",
-        "runtime": 96
-      },
+        "runtime": 96},
       "capacity": 20,
       "showtime": "01:59AM",
       "tickets_sold": 1
