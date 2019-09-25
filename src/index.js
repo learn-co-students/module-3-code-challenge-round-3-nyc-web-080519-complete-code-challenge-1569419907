@@ -69,7 +69,8 @@ function buyTix(){
             let numTix = movieCard.querySelector("[data-action='buy-tix']").innerText;
             let num = parseInt(numTix);
             // once we hit zero, we need to change the btn.
-            if(num === 0){
+            // changes after we hit zero... hmmm
+            if(num < 1){
                 let btnParent = event.target.parentElement
                 // instead of disabling the btn, just remove the btn...
                 event.target.remove()
@@ -78,6 +79,12 @@ function buyTix(){
                 // if num is not zero, we can keep decremetning and 
                 // changing the num.
                 num -= 1;
+                if (num === 0){
+                    let btnParent = event.target.parentElement
+                    // instead of disabling the btn, just remove the btn...
+                    event.target.remove()
+                    btnParent.innerHTML = "Sold Out"
+                }
                 numDiv.innerHTML = `${num} remaining tickets`
                 // this will fetch a post request!
                 postTix(movieId)
