@@ -39,7 +39,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const title = showing.film.title
     const runtime = showing.film.runtime
     const showtime = showing.showtime
-   
     let remainingTickets = (showing.capacity - showing.tickets_sold)
     
     showingsContainer.insertAdjacentHTML("beforeend", `
@@ -119,4 +118,5 @@ document.addEventListener("DOMContentLoaded", () => {
 // This API wasn't RESTFUL in the sense that we could make an individual GET request to a showing/:id (also all those GET requests are probably not great for the server and stuff) so I cobbled together a different way to do it
 // If I had this to do over, I'd store all the response data from the page load GET fetch into an array of the showing objects, and operate off of that to render the DOM. 
 // Instead I started to freak out about the time and just used the dataset alllll over the place like a mad woman. I recognize this is likely "not" "ideal" (Chris Farley air quotes) Lots of places to update things and room for bugs/errors
+// the way I kept passing the number of remaining tickets also isn't great since that's not actually a value that's stored in the db and is the result of some math I did in the render function--and since the render function only gets called at page load I could see some potential room for problemas
 // ALSO rather than replacing the innerHTML on the button when sold out, it would be nicer to toggle the css class and display the Sold Out that way rather than overwriting the HTML
