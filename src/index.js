@@ -1,8 +1,6 @@
 // const theatreId = 803;
 // const url = "https://evening-plateau-54365.herokuapp.com/theatres/803";
 // const showingContainer = document.querySelector("div.ui.cards.showings");
-
-
 document.addEventListener('DOMContentLoaded', () => {
     renderMovies()
     buyTix()
